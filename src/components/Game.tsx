@@ -144,13 +144,13 @@ function Game(props: any) {
       </div>
       <h4>声母</h4>
       <div className='pinyin-list'>
-        {initialList.map((value, index) => (
+        {initialList.map((value, _) => (
           <div className={pyClass.get(initials.get(value) ?? 'unknown')}>{value}</div>
         ))}
       </div>
       <h4>韵母</h4>
       <div className='pinyin-list'>
-        {finalList.map((value, index) => (
+        {finalList.map((value, _) => (
           <div className={pyClass.get(finals.get(value) ?? 'unknown')}>{value}</div>
         ))}
       </div>

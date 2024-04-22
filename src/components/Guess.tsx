@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import './Guess.css';
 
 const NUM_CHARACTERS = 4;
+const DEFAULT_CLASS = ['guess-black', 'guess-black', 'guess-black', 'guess-black'];
 
 function Guess(props: any) {
   const emptyGuess = (
@@ -18,20 +19,15 @@ function Guess(props: any) {
     </>
   );
 
-  const [initialClass, setInitialClass] = useState([
-    'initial-black',
-    'initial-black',
-    'initial-black',
-    'initial-black',
-  ]);
-  const [finalClass, setFinalClass] = useState(['final-black', 'final-black', 'final-black', 'final-black']);
+  const [initialClass, setInitialClass] = useState(DEFAULT_CLASS);
+  const [finalClass, setFinalClass] = useState(DEFAULT_CLASS);
 
   useEffect(() => {
-    let newInitialClass = ['initial-black', 'initial-black', 'initial-black', 'initial-black'];
-    let newFinalClass = ['final-black', 'final-black', 'final-black', 'final-black'];
+    // Executes when a new guess is made
+    let newInitialClass = DEFAULT_CLASS.slice();
+    let newFinalClass = DEFAULT_CLASS.slice();
 
     if (props.theGuess) {
-      const guessedChengYu = props.theGuess;
       // count initials in correct answer
       let correctInitialCount = new Map<string, number>();
       for (let initial of props.correctAnswer.initials) {
@@ -46,59 +42,59 @@ function Guess(props: any) {
 
       // process the green ones first
       for (let i = 0; i < 4; i++) {
-        if (props.correctAnswer.initials[i] === guessedChengYu.initials[i]) {
+        if (props.correctAnswer.initials[i] === props.theGuess.initials[i]) {
           // exact match of initial
-          newInitialClass[i] = 'initial-green';
+          newInitialClass[i] = 'guess-green';
           correctInitialCount.set(
             props.correctAnswer.initials[i],
             (correctInitialCount.get(props.correctAnswer.initials[i]) ?? 0) - 1,
           );
           // update usage to green
-          props.initialUsageHandler(guessedChengYu.initials[i], 'green');
+          props.initialUsageHandler(props.theGuess.initials[i], 'green');
         }
-        if (props.correctAnswer.finals_toneless[i] === guessedChengYu.finals_toneless[i]) {
+        if (props.correctAnswer.finals_toneless[i] === props.theGuess.finals_toneless[i]) {
           // exact match of final
-          newFinalClass[i] = 'final-green';
+          newFinalClass[i] = 'guess-green';
           correctFinalCount.set(
             props.correctAnswer.finals_toneless[i],
             (correctFinalCount.get(props.correctAnswer.finals_toneless[i]) ?? 0) - 1,
           );
           // update usage to green
-          props.finalUsageHandler(guessedChengYu.finals_toneless[i], 'green');
+          props.finalUsageHandler(props.theGuess.finals_toneless[i], 'green');
         }
       }
 
       // then process the yellow ones
       for (let i = 0; i < 4; i++) {
-        if (props.correctAnswer.initials[i] !== guessedChengYu.initials[i]) {
-          if ((correctInitialCount.get(guessedChengYu.initials[i]) ?? 0) > 0) {
+        if (props.correctAnswer.initials[i] !== props.theGuess.initials[i]) {
+          if ((correctInitialCount.get(props.theGuess.initials[i]) ?? 0) > 0) {
             // wrong location of initial
-            newInitialClass[i] = 'initial-yellow';
+            newInitialClass[i] = 'guess-yellow';
             correctInitialCount.set(
-              guessedChengYu.initials[i],
-              (correctInitialCount.get(guessedChengYu.initials[i]) ?? 0) - 1,
+              props.theGuess.initials[i],
+              (correctInitialCount.get(props.theGuess.initials[i]) ?? 0) - 1,
             );
             // if usage is unknown, it's yellow
-            props.initialUsageHandler(guessedChengYu.initials[i], 'yellow');
+            props.initialUsageHandler(props.theGuess.initials[i], 'yellow');
           } else {
             // if usage is unknown, it's red
-            props.initialUsageHandler(guessedChengYu.initials[i], 'red');
+            props.initialUsageHandler(props.theGuess.initials[i], 'red');
           }
         }
 
-        if (props.correctAnswer.finals_toneless[i] !== guessedChengYu.finals_toneless[i]) {
-          if ((correctFinalCount.get(guessedChengYu.finals_toneless[i]) ?? 0) > 0) {
+        if (props.correctAnswer.finals_toneless[i] !== props.theGuess.finals_toneless[i]) {
+          if ((correctFinalCount.get(props.theGuess.finals_toneless[i]) ?? 0) > 0) {
             // wrong location of final
-            newFinalClass[i] = 'final-yellow';
+            newFinalClass[i] = 'guess-yellow';
             correctFinalCount.set(
-              guessedChengYu.finals_toneless[i],
-              (correctFinalCount.get(guessedChengYu.finals_toneless[i]) ?? 0) - 1,
+              props.theGuess.finals_toneless[i],
+              (correctFinalCount.get(props.theGuess.finals_toneless[i]) ?? 0) - 1,
             );
             // if usage is unknown, it's yellow
-            props.finalUsageHandler(guessedChengYu.finals_toneless[i], 'yellow');
+            props.finalUsageHandler(props.theGuess.finals_toneless[i], 'yellow');
           } else {
             // if usage is unknown, it's red
-            props.finalUsageHandler(guessedChengYu.finals_toneless[i], 'red');
+            props.finalUsageHandler(props.theGuess.finals_toneless[i], 'red');
           }
         }
       }
