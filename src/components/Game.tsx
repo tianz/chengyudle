@@ -74,23 +74,7 @@ function Game(props: any) {
   const [count, setCount] = useState(0);
   const [hack, setHack] = useState(0);
   const [guesses, setGuesses] = useState([
-    <Guess />,
-    <Guess />,
-    <Guess />,
-    <Guess />,
-    <Guess />,
-    <Guess />,
-    <Guess />,
-    <Guess />,
-    <Guess />,
-    <Guess />,
-    <Guess />,
-    <Guess />,
-    <Guess />,
-    <Guess />,
-    <Guess />,
-    <Guess />,
-    <Guess />,
+    <Guess />
   ]);
 
   const pyClass = new Map<string, string>([
@@ -142,6 +126,7 @@ function Game(props: any) {
         newGuesses[count] = (
           <Guess correctAnswer={props.correctAnswer} theGuess={myGuess} initialUsageHandler={updateInitialUsage} finalUsageHandler={updateFinalUsage}/>
         );
+        newGuesses.push(<Guess />)
         setCount(count + 1);
         setGuesses(newGuesses);
       }
