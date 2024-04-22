@@ -13,9 +13,7 @@ function PinYinList(props: any) {
     <>
       <div className='pinyin-list'>
         {props.pinYinList.map((value: string, _: number) => (
-          <div className={`pinyin-list__pinyin usage-${usage.get(value)}`}>
-            {value}
-          </div>
+          <div className={`pinyin-list__pinyin usage-${usage.get(value)}`}>{value}</div>
         ))}
       </div>
     </>

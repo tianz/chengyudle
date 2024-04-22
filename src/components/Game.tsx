@@ -115,8 +115,8 @@ function Game(props: any) {
           />
         );
         newGuesses.push(<Guess />);
-        setCount(count + 1);
         setGuesses(newGuesses);
+        setCount(count + 1);
       }
     }
   };
