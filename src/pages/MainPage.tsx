@@ -16,6 +16,9 @@ function MainPage() {
   return (
     <>
     <div className="page-container">
+      <div className="header">
+      <h2>成语dle</h2>
+      </div>
       <Game correctAnswer={ChengYuList[index]} />
     </div>
     </>

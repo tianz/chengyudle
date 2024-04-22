@@ -1,3 +1,7 @@
+.guess-container {
+  margin-top: 20px;
+}
+
 .pinyin-list {
   display: flex;
   flex-wrap: wrap;
