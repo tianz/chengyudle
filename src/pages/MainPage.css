@@ -1,0 +1,15 @@
+.page-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.header {
+  width: 100%;
+  padding-bottom: 10px;
+  border-bottom: 1px solid gray;
+}
+
+.header h2 {
+  margin: 0;
+}
