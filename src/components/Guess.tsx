@@ -1,29 +1,19 @@
 import { useEffect, useState } from 'react';
 
-import { ChengYuList } from '../lib/chengYuList';
-
 import './Guess.css';
 
-function Guess(props) {
+const NUM_CHARACTERS = 4;
+
+function Guess(props: any) {
   const emptyGuess = (
     <>
       <div className='guess-list'>
-        <div className='character-pinyin'>
-          <div className='pinyin'></div>
-          <div className='character'></div>
-        </div>
-        <div className='character-pinyin'>
-          <div className='pinyin'></div>
-          <div className='character'></div>
-        </div>
-        <div className='character-pinyin'>
-          <div className='pinyin'></div>
-          <div className='character'></div>
-        </div>
-        <div className='character-pinyin'>
-          <div className='pinyin'></div>
-          <div className='character'></div>
-        </div>
+        {[...Array(NUM_CHARACTERS)].map(_ => (
+          <div className='character-pinyin'>
+            <div className='pinyin'></div>
+            <div className='character'></div>
+          </div>
+        ))}
       </div>
     </>
   );
@@ -53,20 +43,6 @@ function Guess(props) {
       for (let final of props.correctAnswer.finals_toneless) {
         correctFinalCount.set(final, (correctFinalCount.get(final) ?? 0) + 1);
       }
-
-      // count initials in guess
-      let guessInitialCount = new Map<string, number>();
-      for (let initial of guessedChengYu.initials) {
-        guessInitialCount.set(initial, (guessInitialCount.get(initial) ?? 0) + 1);
-      }
-
-      // count finals in guess
-      let guessFinalCount = new Map<string, number>();
-      for (let final of guessedChengYu.finals_toneless) {
-        guessFinalCount.set(final, (guessFinalCount.get(final) ?? 0) + 1);
-      }
-
-      console.log(correctInitialCount);
 
       // process the green ones first
       for (let i = 0; i < 4; i++) {
@@ -128,7 +104,6 @@ function Guess(props) {
       }
     }
 
-    console.log(newInitialClass);
     setInitialClass(newInitialClass);
     setFinalClass(newFinalClass);
   }, [props.correctAnswer]);
@@ -136,34 +111,15 @@ function Guess(props) {
   return props.theGuess ? (
     <>
       <div className='guess-list'>
-        <div className='character-pinyin'>
-          <div className='pinyin'>
-            <span className={initialClass[0]}>{props.theGuess.initials[0]}</span>
-            <span className={finalClass[0]}>{props.theGuess.finals_toneless[0]}</span>
+        {[...Array(NUM_CHARACTERS)].map((_, index) => (
+          <div className='character-pinyin'>
+            <div className='pinyin'>
+              <span className={initialClass[index]}>{props.theGuess.initials[index]}</span>
+              <span className={finalClass[index]}>{props.theGuess.finals_toneless[index]}</span>
+            </div>
+            <div className='character'>{props.theGuess.word[index]}</div>
           </div>
-          <div className='character'>{props.theGuess.word[0]}</div>
-        </div>
-        <div className='character-pinyin'>
-          <div className='pinyin'>
-            <span className={initialClass[1]}>{props.theGuess.initials[1]}</span>
-            <span className={finalClass[1]}>{props.theGuess.finals_toneless[1]}</span>
-          </div>
-          <div className='character'>{props.theGuess.word[1]}</div>
-        </div>
-        <div className='character-pinyin'>
-          <div className='pinyin'>
-            <span className={initialClass[2]}>{props.theGuess.initials[2]}</span>
-            <span className={finalClass[2]}>{props.theGuess.finals_toneless[2]}</span>
-          </div>
-          <div className='character'>{props.theGuess.word[2]}</div>
-        </div>
-        <div className='character-pinyin'>
-          <div className='pinyin'>
-            <span className={initialClass[3]}>{props.theGuess.initials[3]}</span>
-            <span className={finalClass[3]}>{props.theGuess.finals_toneless[3]}</span>
-          </div>
-          <div className='character'>{props.theGuess.word[3]}</div>
-        </div>
+        ))}
       </div>
     </>
   ) : (
