@@ -4,6 +4,8 @@ import Game from '../components/Game';
 
 import { ChengYuList } from '../lib/chengYuList';
 
+import './MainPage.css';
+
 function MainPage() {
   const [index, setIndex] = useState(0);
 
@@ -13,7 +15,9 @@ function MainPage() {
 
   return (
     <>
+    <div className="page-container">
       <Game correctAnswer={ChengYuList[index]} />
+    </div>
     </>
   );
 }

@@ -73,9 +73,7 @@ function Game(props: any) {
   const [finals, setFinals] = useState(new Map<string, string>());
   const [count, setCount] = useState(0);
   const [hack, setHack] = useState(0);
-  const [guesses, setGuesses] = useState([
-    <Guess />
-  ]);
+  const [guesses, setGuesses] = useState([<Guess />]);
 
   const pyClass = new Map<string, string>([
     ['unknown', 'pinyin-list__pinyin usage-known'],
@@ -101,7 +99,7 @@ function Game(props: any) {
   const updateInitialUsage = (initial: string, status: string) => {
     let mp = initials;
     if (mp.get(initial) === 'unknown' || status === 'green') {
-        mp.set(initial, status);
+      mp.set(initial, status);
     }
     setInitials(mp);
     setHack(hack + 1);
@@ -110,7 +108,7 @@ function Game(props: any) {
   const updateFinalUsage = (final: string, status: string) => {
     let mp = finals;
     if (mp.get(final) === 'unknown' || status === 'green') {
-        mp.set(final, status);
+      mp.set(final, status);
     }
     setFinals(mp);
     setHack(hack + 1);
@@ -124,9 +122,14 @@ function Game(props: any) {
         // valid guess
         let newGuesses = guesses;
         newGuesses[count] = (
-          <Guess correctAnswer={props.correctAnswer} theGuess={myGuess} initialUsageHandler={updateInitialUsage} finalUsageHandler={updateFinalUsage}/>
+          <Guess
+            correctAnswer={props.correctAnswer}
+            theGuess={myGuess}
+            initialUsageHandler={updateInitialUsage}
+            finalUsageHandler={updateFinalUsage}
+          />
         );
-        newGuesses.push(<Guess />)
+        newGuesses.push(<Guess />);
         setCount(count + 1);
         setGuesses(newGuesses);
       }
@@ -135,12 +138,10 @@ function Game(props: any) {
 
   return (
     <>
-    <div className="container">
-    <div className="left">
-        {guesses.map((guess: any) => guess)}
-    </div>
-    <div className="right">
-    <div className='input'>
+      <div className="guess-container">
+      {guesses.map((guess: any) => guess)}
+      </div>
+      <div className='input'>
         <input onKeyDown={handleKeyDown}></input>
       </div>
       <div className='pinyin-list'>
@@ -153,8 +154,6 @@ function Game(props: any) {
           <div className={pyClass.get(finals.get(value) ?? 'unknown')}>{value}</div>
         ))}
       </div>
-    </div>
-    </div>
     </>
   );
 }
