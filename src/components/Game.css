@@ -1,0 +1,42 @@
+.container {
+  display: flex;
+}
+
+.left {
+  width: 45%;
+}
+
+.right {
+  width: 45%;
+  position: sticky;
+  top: 0;
+  left: 0;
+  align-self: flex-start;
+}
+
+.pinyin-list {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.pinyin-list__pinyin {
+  width: 30px;
+  height: 30px;
+  margin: 10px;
+  border: 1px solid gray;
+}
+
+.usage-green {
+  background-color: #538d4e;
+  color: white;
+}
+
+.usage-yellow {
+  background-color: #c9b458;
+  color: white;
+}
+
+.usage-red {
+  background-color: rgb(187, 44, 44);
+  color: white;
+}
