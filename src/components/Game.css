@@ -8,9 +8,13 @@
 }
 
 .pinyin-list__pinyin {
-  width: 30px;
-  height: 30px;
-  margin: 10px;
+  width: 60px;
+  height: 24px;
+  border-radius: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 4px;
   border: 1px solid gray;
 }
 

@@ -39,11 +39,10 @@ function Game(props: any) {
     'i',
     'u',
     'ü',
-    'ai',
     'ao',
+    'ai',
     'an',
     'ang',
-    'ue',
     'ou',
     'ong',
     'ei',
@@ -64,6 +63,7 @@ function Game(props: any) {
     'uan',
     'uang',
     'uo',
+    'ue',
     'ui',
     'un',
     'üe',
@@ -138,17 +138,17 @@ function Game(props: any) {
 
   return (
     <>
-      <div className="guess-container">
-      {guesses.map((guess: any) => guess)}
-      </div>
+      <div className='guess-container'>{guesses.map((guess: any) => guess)}</div>
       <div className='input'>
         <input onKeyDown={handleKeyDown}></input>
       </div>
+      <h4>声母</h4>
       <div className='pinyin-list'>
         {initialList.map((value, index) => (
           <div className={pyClass.get(initials.get(value) ?? 'unknown')}>{value}</div>
         ))}
       </div>
+      <h4>韵母</h4>
       <div className='pinyin-list'>
         {finalList.map((value, index) => (
           <div className={pyClass.get(finals.get(value) ?? 'unknown')}>{value}</div>
