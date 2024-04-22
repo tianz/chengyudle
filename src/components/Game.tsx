@@ -5,6 +5,7 @@ import { ChengYuList } from '../lib/chengYuList';
 import './Game.css';
 
 import Guess from './Guess';
+import PinYinList from './PinYinList';
 
 function Game(props: any) {
   const initialList = [
@@ -72,15 +73,7 @@ function Game(props: any) {
   const [initials, setInitials] = useState(new Map<string, string>());
   const [finals, setFinals] = useState(new Map<string, string>());
   const [count, setCount] = useState(0);
-  const [hack, setHack] = useState(0);
   const [guesses, setGuesses] = useState([<Guess />]);
-
-  const pyClass = new Map<string, string>([
-    ['unknown', 'pinyin-list__pinyin usage-known'],
-    ['green', 'pinyin-list__pinyin usage-green'],
-    ['yellow', 'pinyin-list__pinyin usage-yellow'],
-    ['red', 'pinyin-list__pinyin usage-red'],
-  ]);
 
   useEffect(() => {
     let newInitials = new Map<string, string>();
@@ -96,22 +89,12 @@ function Game(props: any) {
     setFinals(newFinals);
   }, []);
 
-  const updateInitialUsage = (initial: string, status: string) => {
-    let mp = initials;
-    if (mp.get(initial) === 'unknown' || status === 'green') {
-      mp.set(initial, status);
-    }
-    setInitials(mp);
-    setHack(hack + 1);
+  const updateInitialUsage = (newInitials: any) => {
+    setInitials(newInitials);
   };
 
-  const updateFinalUsage = (final: string, status: string) => {
-    let mp = finals;
-    if (mp.get(final) === 'unknown' || status === 'green') {
-      mp.set(final, status);
-    }
-    setFinals(mp);
-    setHack(hack + 1);
+  const updateFinalUsage = (newFinals: any) => {
+    setFinals(newFinals);
   };
 
   const handleKeyDown = (event: any) => {
@@ -127,6 +110,8 @@ function Game(props: any) {
             theGuess={myGuess}
             initialUsageHandler={updateInitialUsage}
             finalUsageHandler={updateFinalUsage}
+            initials={initials}
+            finals={finals}
           />
         );
         newGuesses.push(<Guess />);
@@ -143,17 +128,9 @@ function Game(props: any) {
         <input onKeyDown={handleKeyDown}></input>
       </div>
       <h4>声母</h4>
-      <div className='pinyin-list'>
-        {initialList.map((value, _) => (
-          <div className={pyClass.get(initials.get(value) ?? 'unknown')}>{value}</div>
-        ))}
-      </div>
+      <PinYinList pinYinList={initialList} usage={initials} />
       <h4>韵母</h4>
-      <div className='pinyin-list'>
-        {finalList.map((value, _) => (
-          <div className={pyClass.get(finals.get(value) ?? 'unknown')}>{value}</div>
-        ))}
-      </div>
+      <PinYinList pinYinList={finalList} usage={finals} />
     </>
   );
 }

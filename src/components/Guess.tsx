@@ -26,6 +26,8 @@ function Guess(props: any) {
     // Executes when a new guess is made
     let newInitialClass = DEFAULT_CLASS.slice();
     let newFinalClass = DEFAULT_CLASS.slice();
+    let newInitialsUsage = new Map(props.initials);
+    let newFinalsUsage = new Map(props.finals);
 
     if (props.theGuess) {
       // count initials in correct answer
@@ -50,7 +52,8 @@ function Guess(props: any) {
             (correctInitialCount.get(props.correctAnswer.initials[i]) ?? 0) - 1,
           );
           // update usage to green
-          props.initialUsageHandler(props.theGuess.initials[i], 'green');
+          // props.initialUsageHandler(props.theGuess.initials[i], 'green');
+          newInitialsUsage.set(props.theGuess.initials[i], 'green');
         }
         if (props.correctAnswer.finals_toneless[i] === props.theGuess.finals_toneless[i]) {
           // exact match of final
@@ -60,7 +63,8 @@ function Guess(props: any) {
             (correctFinalCount.get(props.correctAnswer.finals_toneless[i]) ?? 0) - 1,
           );
           // update usage to green
-          props.finalUsageHandler(props.theGuess.finals_toneless[i], 'green');
+          // props.finalUsageHandler(props.theGuess.finals_toneless[i], 'green');
+          newFinalsUsage.set(props.theGuess.finals_toneless[i], 'green');
         }
       }
 
@@ -75,10 +79,16 @@ function Guess(props: any) {
               (correctInitialCount.get(props.theGuess.initials[i]) ?? 0) - 1,
             );
             // if usage is unknown, it's yellow
-            props.initialUsageHandler(props.theGuess.initials[i], 'yellow');
+            // props.initialUsageHandler(props.theGuess.initials[i], 'yellow');
+            if (newInitialsUsage.get(props.theGuess.initials[i]) === 'unknown') {
+              newInitialsUsage.set(props.theGuess.initials[i], 'yellow');
+            }
           } else {
             // if usage is unknown, it's red
-            props.initialUsageHandler(props.theGuess.initials[i], 'red');
+            // props.initialUsageHandler(props.theGuess.initials[i], 'red');
+            if (newInitialsUsage.get(props.theGuess.initials[i]) === 'unknown') {
+              newInitialsUsage.set(props.theGuess.initials[i], 'red');
+            }
           }
         }
 
@@ -91,13 +101,22 @@ function Guess(props: any) {
               (correctFinalCount.get(props.theGuess.finals_toneless[i]) ?? 0) - 1,
             );
             // if usage is unknown, it's yellow
-            props.finalUsageHandler(props.theGuess.finals_toneless[i], 'yellow');
+            // props.finalUsageHandler(props.theGuess.finals_toneless[i], 'yellow');
+            if (newFinalsUsage.get(props.theGuess.finals_toneless[i]) === 'unknown') {
+              newFinalsUsage.set(props.theGuess.finals_toneless[i], 'yellow');
+            }
           } else {
             // if usage is unknown, it's red
-            props.finalUsageHandler(props.theGuess.finals_toneless[i], 'red');
+            // props.finalUsageHandler(props.theGuess.finals_toneless[i], 'red');
+            if (newFinalsUsage.get(props.theGuess.finals_toneless[i]) === 'unknown') {
+              newFinalsUsage.set(props.theGuess.finals_toneless[i], 'red');
+            }
           }
         }
       }
+
+      props.initialUsageHandler(newInitialsUsage);
+      props.finalUsageHandler(newFinalsUsage);
     }
 
     setInitialClass(newInitialClass);
