@@ -123,6 +123,7 @@ function Game(props: any) {
 
   return (
     <>
+      <h3>难度：{props.correctAnswer.difficulty}</h3>
       <div className='guess-container'>{guesses.map((guess: any) => guess)}</div>
       <div className='input'>
         <input onKeyDown={handleKeyDown}></input>
