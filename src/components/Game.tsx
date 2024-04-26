@@ -100,30 +100,36 @@ function Game(props: any) {
 
   const handleInputChange = (event: any) => {
     setInputVal(event.target.value);
-  }
+  };
 
   const handleKeyDown = (event: any) => {
     if (event.key === 'Enter') {
-      let guess = event.target.value.trim();
-      if (ChengYuList.filter(chengyu => chengyu.word === guess).length == 1) {
-        let myGuess = ChengYuList.filter(chengyu => chengyu.word === guess)[0];
-        // valid guess
-        let newGuesses = guesses;
-        newGuesses[count] = (
-          <Guess
-            correctAnswer={props.correctAnswer}
-            theGuess={myGuess}
-            initialUsageHandler={updateInitialUsage}
-            finalUsageHandler={updateFinalUsage}
-            initials={initials}
-            finals={finals}
-          />
-        );
-        newGuesses.push(<Guess />);
-        setGuesses(newGuesses);
-        setCount(count + 1);
-        setInputVal('');
-      }
+      handleGuess();
+    }
+  };
+
+  const handleGuess = () => {
+    const guess = inputVal.trim();
+    if (ChengYuList.filter(chengyu => chengyu.word === guess).length == 1) {
+      let myGuess = ChengYuList.filter(chengyu => chengyu.word === guess)[0];
+      // valid guess
+      let newGuesses = guesses;
+      newGuesses[count] = (
+        <Guess
+          correctAnswer={props.correctAnswer}
+          theGuess={myGuess}
+          initialUsageHandler={updateInitialUsage}
+          finalUsageHandler={updateFinalUsage}
+          initials={initials}
+          finals={finals}
+        />
+      );
+      newGuesses.push(<Guess />);
+      setGuesses(newGuesses);
+      setCount(count + 1);
+      setInputVal('');
+    } else {
+      setInputVal(guess); // trim
     }
   };
 
@@ -132,7 +138,10 @@ function Game(props: any) {
       <h3>难度：{props.correctAnswer.difficulty}</h3>
       <div className='guess-container'>{guesses.map((guess: any) => guess)}</div>
       <div className='input'>
-        <input onKeyDown={handleKeyDown} onChange={handleInputChange} value={inputVal}></input>
+        <input className='input__field' onKeyDown={handleKeyDown} onChange={handleInputChange} value={inputVal}></input>
+        <div className='input__button' onClick={handleGuess}>
+          确认
+        </div>
       </div>
       <h4>声母</h4>
       <PinYinList pinYinList={initialList} usage={initials} />
