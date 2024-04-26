@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import { ChengYuList } from '../lib/chengYuList';
+import { finalList, initialList } from '../lib/pinyin';
 
 import './Game.css';
 
@@ -8,70 +9,8 @@ import Guess from './Guess';
 import PinYinList from './PinYinList';
 
 function Game(props: any) {
-  const initialList = [
-    'b',
-    'p',
-    'm',
-    'f',
-    'd',
-    't',
-    'n',
-    'l',
-    'g',
-    'k',
-    'h',
-    'j',
-    'q',
-    'x',
-    'zh',
-    'ch',
-    'sh',
-    'r',
-    'z',
-    'c',
-    's',
-    'y',
-    'w',
-  ];
-  const finalList = [
-    'a',
-    'o',
-    'e',
-    'i',
-    'u',
-    'ü',
-    'ao',
-    'ai',
-    'an',
-    'ang',
-    'ou',
-    'ong',
-    'ei',
-    'en',
-    'eng',
-    'er',
-    'ia',
-    'iao',
-    'ian',
-    'iang',
-    'iong',
-    'ie',
-    'iu',
-    'in',
-    'ing',
-    'ua',
-    'uai',
-    'uan',
-    'uang',
-    'uo',
-    'ue',
-    'ui',
-    'un',
-    'üe',
-  ];
-
-  const [initials, setInitials] = useState(new Map<string, string>());
-  const [finals, setFinals] = useState(new Map<string, string>());
+  const [initialsUsage, setInitialsUsage] = useState(new Map<string, string>());
+  const [finalsUsage, setFinalsUsage] = useState(new Map<string, string>());
   const [count, setCount] = useState(0);
   const [guesses, setGuesses] = useState([<Guess />]);
   const [inputVal, setInputVal] = useState('');
@@ -81,21 +20,21 @@ function Game(props: any) {
     for (let initial of initialList) {
       newInitials.set(initial, 'unknown');
     }
-    setInitials(newInitials);
+    setInitialsUsage(newInitials);
 
     let newFinals = new Map<string, string>();
     for (let final of finalList) {
       newFinals.set(final, 'unknown');
     }
-    setFinals(newFinals);
+    setFinalsUsage(newFinals);
   }, []);
 
   const updateInitialUsage = (newInitials: any) => {
-    setInitials(newInitials);
+    setInitialsUsage(newInitials);
   };
 
   const updateFinalUsage = (newFinals: any) => {
-    setFinals(newFinals);
+    setFinalsUsage(newFinals);
   };
 
   const handleInputChange = (event: any) => {
@@ -120,8 +59,8 @@ function Game(props: any) {
           theGuess={myGuess}
           initialUsageHandler={updateInitialUsage}
           finalUsageHandler={updateFinalUsage}
-          initials={initials}
-          finals={finals}
+          initials={initialsUsage}
+          finals={finalsUsage}
         />
       );
       newGuesses.push(<Guess />);
@@ -144,9 +83,9 @@ function Game(props: any) {
         </div>
       </div>
       <h4>声母</h4>
-      <PinYinList pinYinList={initialList} usage={initials} />
+      <PinYinList pinYinList={initialList} usage={initialsUsage} />
       <h4>韵母</h4>
-      <PinYinList pinYinList={finalList} usage={finals} />
+      <PinYinList pinYinList={finalList} usage={finalsUsage} />
     </>
   );
 }
