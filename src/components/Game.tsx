@@ -74,6 +74,7 @@ function Game(props: any) {
   const [finals, setFinals] = useState(new Map<string, string>());
   const [count, setCount] = useState(0);
   const [guesses, setGuesses] = useState([<Guess />]);
+  const [inputVal, setInputVal] = useState('');
 
   useEffect(() => {
     let newInitials = new Map<string, string>();
@@ -97,6 +98,10 @@ function Game(props: any) {
     setFinals(newFinals);
   };
 
+  const handleInputChange = (event: any) => {
+    setInputVal(event.target.value);
+  }
+
   const handleKeyDown = (event: any) => {
     if (event.key === 'Enter') {
       let guess = event.target.value.trim();
@@ -117,6 +122,7 @@ function Game(props: any) {
         newGuesses.push(<Guess />);
         setGuesses(newGuesses);
         setCount(count + 1);
+        setInputVal('');
       }
     }
   };
@@ -126,7 +132,7 @@ function Game(props: any) {
       <h3>难度：{props.correctAnswer.difficulty}</h3>
       <div className='guess-container'>{guesses.map((guess: any) => guess)}</div>
       <div className='input'>
-        <input onKeyDown={handleKeyDown}></input>
+        <input onKeyDown={handleKeyDown} onChange={handleInputChange} value={inputVal}></input>
       </div>
       <h4>声母</h4>
       <PinYinList pinYinList={initialList} usage={initials} />
