@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 
+import { Usage } from '../lib/pinyin';
+
 import './Guess.css';
 
 const NUM_CHARACTERS = 4;
@@ -52,7 +54,7 @@ function Guess(props: any) {
             (correctInitialCount.get(props.correctAnswer.initials[i]) ?? 0) - 1,
           );
           // update usage to green
-          newInitialsUsage.set(props.theGuess.initials[i], 'green');
+          newInitialsUsage.set(props.theGuess.initials[i], Usage.GREEN);
         }
         if (props.correctAnswer.finals_toneless[i] === props.theGuess.finals_toneless[i]) {
           // exact match of final
@@ -62,7 +64,7 @@ function Guess(props: any) {
             (correctFinalCount.get(props.correctAnswer.finals_toneless[i]) ?? 0) - 1,
           );
           // update usage to green
-          newFinalsUsage.set(props.theGuess.finals_toneless[i], 'green');
+          newFinalsUsage.set(props.theGuess.finals_toneless[i], Usage.GREEN);
         }
       }
 
@@ -77,13 +79,13 @@ function Guess(props: any) {
               (correctInitialCount.get(props.theGuess.initials[i]) ?? 0) - 1,
             );
             // if usage is unknown, it's yellow
-            if (newInitialsUsage.get(props.theGuess.initials[i]) === 'unknown') {
-              newInitialsUsage.set(props.theGuess.initials[i], 'yellow');
+            if (newInitialsUsage.get(props.theGuess.initials[i]) === Usage.UNKNOWN) {
+              newInitialsUsage.set(props.theGuess.initials[i], Usage.YELLOW);
             }
           } else {
             // if usage is unknown, it's red
-            if (newInitialsUsage.get(props.theGuess.initials[i]) === 'unknown') {
-              newInitialsUsage.set(props.theGuess.initials[i], 'red');
+            if (newInitialsUsage.get(props.theGuess.initials[i]) === Usage.UNKNOWN) {
+              newInitialsUsage.set(props.theGuess.initials[i], Usage.RED);
             }
           }
         }
@@ -97,13 +99,13 @@ function Guess(props: any) {
               (correctFinalCount.get(props.theGuess.finals_toneless[i]) ?? 0) - 1,
             );
             // if usage is unknown, it's yellow
-            if (newFinalsUsage.get(props.theGuess.finals_toneless[i]) === 'unknown') {
-              newFinalsUsage.set(props.theGuess.finals_toneless[i], 'yellow');
+            if (newFinalsUsage.get(props.theGuess.finals_toneless[i]) === Usage.UNKNOWN) {
+              newFinalsUsage.set(props.theGuess.finals_toneless[i], Usage.YELLOW);
             }
           } else {
             // if usage is unknown, it's red
-            if (newFinalsUsage.get(props.theGuess.finals_toneless[i]) === 'unknown') {
-              newFinalsUsage.set(props.theGuess.finals_toneless[i], 'red');
+            if (newFinalsUsage.get(props.theGuess.finals_toneless[i]) === Usage.UNKNOWN) {
+              newFinalsUsage.set(props.theGuess.finals_toneless[i], Usage.RED);
             }
           }
         }
